@@ -1,12 +1,10 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Home() {
+export default function UnderConstruction() {
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.container}>Home</Text>
-            <Text style={styles.container}>Home</Text>
-            <Text style={styles.container}>Home</Text>
+            <Text style={styles.container}>Error 404</Text>
         </SafeAreaView>
     );
 }
@@ -19,7 +17,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        color: 'red',
+        color: 'black',
     }
-  });
+});
   
