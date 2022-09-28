@@ -12,11 +12,9 @@ const DrawerNavigation = createDrawerNavigator();
 
 export default function Drawer() {
     return (
-        <DrawerNavigation.Navigator initialRouteName='Home'>
+        <DrawerNavigation.Navigator initialRouteName='Home'  screenOptions={{drawerStyle:{ backgroundColor:'#d7e7e3'}}}>
             <DrawerNavigation.Screen name="MyTinerary" component={Stack} />
             <DrawerNavigation.Screen name="Cities" component={Cities} />
-            <DrawerNavigation.Screen name="Details" component={Details} />
-            <DrawerNavigation.Screen name="UnderConstruction" component={UnderConstruction} />
         </DrawerNavigation.Navigator>
     );
 }
