@@ -5,6 +5,7 @@ import Home from '../../src/screens/Home'
 import Cities from '../screens/Cities';
 import Details from '../screens/Details';
 import UnderConstruction from '../screens/UnderConstruction';
+import Stack from './Stack';
 
 const DrawerNavigation = createDrawerNavigator();
 // const Tab = createBottomTabNavigator();
@@ -12,7 +13,7 @@ const DrawerNavigation = createDrawerNavigator();
 export default function Drawer() {
     return (
         <DrawerNavigation.Navigator initialRouteName='Home'>
-            <DrawerNavigation.Screen name="MyTinerary" component={Home} />
+            <DrawerNavigation.Screen name="MyTinerary" component={Stack} />
             <DrawerNavigation.Screen name="Cities" component={Cities} />
             <DrawerNavigation.Screen name="Details" component={Details} />
             <DrawerNavigation.Screen name="UnderConstruction" component={UnderConstruction} />

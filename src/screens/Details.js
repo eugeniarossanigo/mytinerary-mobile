@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
         width: 320,
         marginLeft: 20,
         marginRight: 20,
+        paddingBottom: 10,
         flexDirection: 'row',
         justifyContent: 'space-evenly'
     },
