@@ -2,12 +2,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../../src/screens/Home'
 import Cities from '../screens/Cities';
 import Details from '../screens/Details';
-import UnderConstruction from '../screens/UnderConstruction';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
+
 const StackNavigation = createStackNavigator();
 
 export default function Stack() {
+
     return (
         <StackNavigation.Navigator initialRouteName='Home'>
             <StackNavigation.Screen name="Home" component={Home} options={{headerShown: false}} />
