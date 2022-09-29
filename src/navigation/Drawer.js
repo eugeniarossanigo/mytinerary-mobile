@@ -12,6 +12,7 @@ import { useUserLogoutMutation } from "../redux/usersAPI";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCredentials } from '../redux/userSlice';
+import MyTinerary from '../screens/MyTinerary';
 
 const DrawerNavigation = createDrawerNavigator();
 // const Tab = createBottomTabNavigator();
@@ -61,10 +62,11 @@ export default function Drawer() {
                 color: '#dfaa5b'
             }
         }} >
-            <DrawerNavigation.Screen name="MyTinerary" component={Stack} />
+            <DrawerNavigation.Screen name="Home" component={Stack} />
             <DrawerNavigation.Screen name="Cities" component={Cities} />
             <DrawerNavigation.Screen name="SignIn" component={SignIn} />
             <DrawerNavigation.Screen name="SignUp" component={SignUp} />
+            <DrawerNavigation.Screen name="MyTinerary" component={MyTinerary} />
         </DrawerNavigation.Navigator>
     );
 }

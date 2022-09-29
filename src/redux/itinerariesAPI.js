@@ -72,5 +72,5 @@ export const itinerariesAPI = createApi({
 
 export default itinerariesAPI;
 
-export const { useGetItinerariesMutation } = itinerariesAPI
+export const { useGetItinerariesMutation, useGetItineraryUserMutation } = itinerariesAPI
 // , useGetDeleteItineraryMutation, useGetAllItinerariesQuery, useGetItineraryCityQuery, useGetItineraryUserMutation, useGetNewItineraryMutation, useGetPatchItineraryMutation, useGetItineraryIdQuery, useLikeDislikeMutation
