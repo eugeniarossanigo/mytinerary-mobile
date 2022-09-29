@@ -1,25 +1,59 @@
 import { View, Form, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-
-
+import { useDispatch } from "react-redux";
+import { useUserLoginMutation } from "../redux/usersAPI";
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import { setCredentials } from '../redux/userSlice';
 
 export default function SignIn() {
+    const dispatch = useDispatch()
+    const navigation = useNavigation()
+
+    const [email, setEmail] = useState("")
+    const [pass, setPass] = useState("")
+    const [userLogin] = useUserLoginMutation()
+
+    const handleSignin = async(e) => {
+        e.preventDefault()
+        let newUserData = {
+            mail: email.trim(),
+            password : pass.trim()
+        }
+        await userLogin(newUserData)
+        .then(response => {
+            AsyncStorage.setItem('token', response.data.response.token)
+            dispatch(setCredentials(response.data.response.user))
+            navigation.navigate('Home')
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
     return (
         <>
             <View style={styles.container}>
                 <View style={styles.login}>
                     <Text style={styles.title}>WELCOME BACK</Text>
-                    <Text style={styles.titleInput}>Email:</Text>
-                    <TextInput type="email" placeholder="email" style={[styles.input, styles.inputText]} />
-                    <Text style={styles.titleInput}>Password:</Text>
-                    <TextInput secureTextEntry={true} placeholder="Password" style={[styles.input, styles.inputText]} />
-                    <TouchableOpacity style={styles.botton}><Text style={styles.h3}>LOG IN</Text></TouchableOpacity>
+                    <View>
+                        <Text style={styles.titleInput}>Email:</Text>
+                        <TextInput type="email" placeholder="email" style={[styles.input, styles.inputText]} 
+                        onChangeText={(text) => setEmail(text)} />
+                    </View>
+                    <View>
+                        <Text style={styles.titleInput}>Password:</Text>
+                        <TextInput secureTextEntry={true} placeholder="Password" style={[styles.input, styles.inputText]}
+                        onChangeText={(text) => setPass(text)} />
+                    </View>
+                    <TouchableOpacity style={styles.botton} onPress={handleSignin}><Text style={styles.h3}>LOG IN</Text></TouchableOpacity>
                 </View>
             </View>
         </>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         width: '100%',
@@ -38,7 +72,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 2, height: 4 },
         shadowOpacity: 0.5,
         shadowRadius: 3,
-
     },
     input: {
         width: 350,
@@ -90,6 +123,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
         color: '#78788c',
         fontWeight: '800',
+        borderBottomColor: '#377771',
+        borderBottomWidth: 2,
     },
 
 })
