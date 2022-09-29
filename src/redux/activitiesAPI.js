@@ -44,4 +44,5 @@ export const activitiesAPI = createApi({
 })
 
 export default activitiesAPI;
-export const { useGetAllActivitiesQuery, useGetActivitiesMutation, useGetActivityItineraryQuery, useGetNewActivityMutation, useGetDeleteActivityMutation } = activitiesAPI
+export const { useGetActivityItineraryQuery } = activitiesAPI
+// useGetAllActivitiesQuery, useGetActivitiesMutation, , useGetNewActivityMutation, useGetDeleteActivityMutation

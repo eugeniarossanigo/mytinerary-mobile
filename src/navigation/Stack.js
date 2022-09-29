@@ -9,7 +9,7 @@ const StackNavigation = createStackNavigator();
 export default function Stack() {
     return (
         <StackNavigation.Navigator initialRouteName='Home'>
-            <StackNavigation.Screen name="MyTinerary" component={Home} />
+            <StackNavigation.Screen name="Home" component={Home} />
             <StackNavigation.Screen name="Cities" component={Cities} />
             <StackNavigation.Screen name="Details" component={Details} />
         </StackNavigation.Navigator>

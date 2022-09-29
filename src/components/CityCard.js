@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, Image } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 // import Details from './screens/Details';
@@ -6,21 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 export default function CityCard({city}) {
     const navigation = useNavigation()
 
-    // const onPress = () => {
-    //     console.log("hi")
-    // }
-
     return (
         <>
-            <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Details', {id: city._id})}>
-            {/* <View style={styles.container}> */}
-                {/* <d className="card__background" style={{ backgroundImage: `url(${city.photo})`}} ></div> */}
+            <TouchableOpacity key={city._id} style={styles.container} onPress={() => navigation.navigate('Details', {id: city._id})}>
                 <Image style={styles.image} source={{uri: city.photo}} />
                 <View style={styles.names} key={city._id}>
                     <Text style={styles.h2}>{city.province}</Text>
                     <Text style={styles.h3}>{city.city}</Text>
                 </View>
-            {/* </View> */}
             </TouchableOpacity>
         </>
     )

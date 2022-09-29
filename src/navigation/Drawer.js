@@ -12,7 +12,20 @@ const DrawerNavigation = createDrawerNavigator();
 
 export default function Drawer() {
     return (
-        <DrawerNavigation.Navigator initialRouteName='Home'>
+        <DrawerNavigation.Navigator initialRouteName='Home'
+        screenOptions={{
+            drawerStyle: {
+                backgroundColor: '#f7f3eeee'
+            },
+            drawerActiveBackgroundColor: '#fff',
+            drawerActiveTintColor: '#377771',
+            headerStyle: {
+                backgroundColor: '#f7f3eee'
+            },
+            headerTitleStyle: {
+                color: '#dfaa5b'
+            }
+        }} >
             <DrawerNavigation.Screen name="MyTinerary" component={Stack} />
             <DrawerNavigation.Screen name="Cities" component={Cities} />
             <DrawerNavigation.Screen name="Details" component={Details} />

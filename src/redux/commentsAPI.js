@@ -24,7 +24,7 @@ export const commentsAPI = createApi({
         getCommentId: builder.query({
             query: (id) => '/comments/'+id
         }),
-        getNewComment: builder.mutation({
+        createNewComment: builder.mutation({
             query(comment){
                 return{
                     url: '/comments',
@@ -57,4 +57,5 @@ export const commentsAPI = createApi({
 })
 
 export default commentsAPI;
-export const { useGetAllCommentsMutation, useGetCommentIdQuery, useGetCommentItineraryQuery, useGetCommentUserQuery, useGetNewCommentMutation, useDeleteCommentMutation, useUpdateCommentMutation } = commentsAPI
+export const { useCreateNewCommentMutation, useGetAllCommentsMutation } = commentsAPI
+// useGetCommentIdQuery, useGetCommentItineraryQuery, useGetCommentUserQuery, useDeleteCommentMutation, useUpdateCommentMutation
