@@ -9,9 +9,9 @@ const StackNavigation = createStackNavigator();
 export default function Stack() {
     return (
         <StackNavigation.Navigator initialRouteName='Home'>
-            <StackNavigation.Screen name="Home" component={Home} />
-            <StackNavigation.Screen name="Cities" component={Cities} />
-            <StackNavigation.Screen name="Details" component={Details} />
+            <StackNavigation.Screen name="Home" component={Home} options={{headerShown: false}} />
+            <StackNavigation.Screen name="Cities" component={Cities} options={{headerShown: false}} />
+            <StackNavigation.Screen name="Details" component={Details} options={{headerShown: false}} />
         </StackNavigation.Navigator>
     );
 }

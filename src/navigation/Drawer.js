@@ -28,8 +28,6 @@ export default function Drawer() {
         }} >
             <DrawerNavigation.Screen name="MyTinerary" component={Stack} />
             <DrawerNavigation.Screen name="Cities" component={Cities} />
-            <DrawerNavigation.Screen name="Details" component={Details} />
-            <DrawerNavigation.Screen name="UnderConstruction" component={UnderConstruction} />
         </DrawerNavigation.Navigator>
     );
 }
