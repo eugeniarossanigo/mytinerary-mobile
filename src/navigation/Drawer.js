@@ -5,6 +5,7 @@ import Home from '../../src/screens/Home'
 import Cities from '../screens/Cities';
 import Details from '../screens/Details';
 import SignIn from '../screens/SignIn';
+import SignUp from '../screens/SignUp';
 import UnderConstruction from '../screens/UnderConstruction';
 import Stack from './Stack';
 
@@ -30,6 +31,7 @@ export default function Drawer() {
             <DrawerNavigation.Screen name="MyTinerary" component={Stack} />
             <DrawerNavigation.Screen name="Cities" component={Cities} />
             <DrawerNavigation.Screen name="SignIn" component={SignIn} />
+            <DrawerNavigation.Screen name="SignUp" component={SignUp} />
         </DrawerNavigation.Navigator>
     );
 }
