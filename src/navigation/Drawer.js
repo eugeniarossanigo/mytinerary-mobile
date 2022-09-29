@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Home from '../../src/screens/Home'
 import Cities from '../screens/Cities';
 import SignIn from '../screens/SignIn';
+import SignUp from '../screens/SignUp';
 import Stack from './Stack';
 import { useUserLogoutMutation } from "../redux/usersAPI";
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -63,6 +64,7 @@ export default function Drawer() {
             <DrawerNavigation.Screen name="MyTinerary" component={Stack} />
             <DrawerNavigation.Screen name="Cities" component={Cities} />
             <DrawerNavigation.Screen name="SignIn" component={SignIn} />
+            <DrawerNavigation.Screen name="SignUp" component={SignUp} />
         </DrawerNavigation.Navigator>
     );
 }
