@@ -1,7 +1,41 @@
+import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useUserSignupMutation } from "../redux/usersAPI";
 
 export default function SignUp() {
+    const navigation = useNavigation()
+
+    const [name, setName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [mail, setMail] = useState("")
+    const [password, setPassword] = useState("")
+    const [photo, setPhoto] = useState("")
+    const [country, setCountry] = useState("")
+    const [userSignup] = useUserSignupMutation()
+
+    const handleSignup = async(e) => {
+        e.preventDefault()
+        let newUserData = {
+            name: name.trim(),
+            lastName: lastName.trim(),
+            mail: mail.trim().toLowerCase(),
+            password: password.trim(),
+            photo: photo.trim(),
+            country: country.trim(),
+            role: "user",
+            from: "form"
+        }
+        await userSignup(newUserData)
+        .then(response => {
+            navigation.navigate('SignIn')
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
     return (
         <>
         <KeyboardAvoidingView behavior="padding" style={styles.keyboard}>
@@ -11,29 +45,29 @@ export default function SignUp() {
                         <Text style={styles.title}>CREATE YOUR ACCOUNT</Text>
                         <View>
                             <Text style={styles.titleInput}>Name:</Text>
-                            <TextInput type="email" placeholder="e.g Maria" style={[styles.input, styles.inputText]} />
+                            <TextInput type="text" placeholder="e.g Maria" style={[styles.input, styles.inputText]} onChangeText={(text) => setName(text)} />
                         </View>
                         <View>
                             <Text style={styles.titleInput}>LastName:</Text>
-                            <TextInput type="email" placeholder="e.g Phillips" style={[styles.input, styles.inputText]} />
+                            <TextInput type="text" placeholder="e.g Phillips" style={[styles.input, styles.inputText]} onChangeText={(text) => setLastName(text)}/>
                         </View>
                         <View>
                             <Text style={styles.titleInput}>Email:</Text>
-                            <TextInput type="email" placeholder="mariaphilips@gmail.com" style={[styles.input, styles.inputText]} />
+                            <TextInput type="email" placeholder="mariaphilips@gmail.com" style={[styles.input, styles.inputText]} onChangeText={(text) => setMail(text)} />
                         </View>
                         <View>
                             <Text style={styles.titleInput}>Password:</Text>
-                            <TextInput secureTextEntry={true} placeholder="Password" style={[styles.input, styles.inputText]} />
+                            <TextInput secureTextEntry={true} placeholder="Password" style={[styles.input, styles.inputText]} onChangeText={(text) => setPassword(text)} />
                         </View>
                         <View>
                             <Text style={styles.titleInput}>Photo:</Text>
-                            <TextInput type="email" placeholder="must be a url" style={[styles.input, styles.inputText]} />
+                            <TextInput type="text" placeholder="must be a url" style={[styles.input, styles.inputText]} onChangeText={(text) => setPhoto(text)} />
                         </View>
                         <View>
                             <Text style={styles.titleInput}>Country:</Text>
-                            <TextInput type="email" placeholder="Argentina" style={[styles.input, styles.inputText]} />
+                            <TextInput type="text" placeholder="Argentina" style={[styles.input, styles.inputText]} onChangeText={(text) => setCountry(text)}/>
                         </View>
-                        <TouchableOpacity style={styles.botton}><Text style={styles.h3}>SIGN UP</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.botton} onPress={handleSignup}><Text style={styles.h3}>SIGN UP</Text></TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
@@ -41,6 +75,7 @@ export default function SignUp() {
         </>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         width: '100%',
