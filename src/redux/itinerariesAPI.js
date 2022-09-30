@@ -69,4 +69,4 @@ export const itinerariesAPI = createApi({
 })
 
 export default itinerariesAPI;
-export const { useGetItinerariesMutation, useDeleteItineraryMutation, useLikeDislikeMutation } = itinerariesAPI
+export const { useGetItinerariesMutation, useDeleteItineraryMutation, useLikeDislikeMutation, useGetItineraryUserMutation } = itinerariesAPI

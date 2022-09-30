@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch } from "react-redux";
 import { useUserLoginMutation } from "../redux/usersAPI";
@@ -14,41 +14,45 @@ export default function SignIn() {
     const [pass, setPass] = useState("")
     const [userLogin] = useUserLoginMutation()
 
-    const handleSignin = async(e) => {
+    const handleSignin = async (e) => {
         e.preventDefault()
         let newUserData = {
             mail: email.trim().toLowerCase(),
-            password : pass.trim()
+            password: pass.trim()
         }
         await userLogin(newUserData)
-        .then(response => {
-            AsyncStorage.setItem('token', response.data.response.token)
-            dispatch(setCredentials(response.data.response.user))
-            navigation.navigate('Home')
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .then(response => {
+                AsyncStorage.setItem('token', response.data.response.token)
+                dispatch(setCredentials(response.data.response.user))
+                navigation.navigate('Home')
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     return (
         <>
-            <View style={styles.container}>
-                <View style={styles.login}>
-                    <Text style={styles.title}>WELCOME BACK</Text>
-                    <View>
-                        <Text style={styles.titleInput}>Email:</Text>
-                        <TextInput type="email" placeholder="email" style={[styles.input, styles.inputText]} 
-                        onChangeText={(text) => setEmail(text)} />
+            <KeyboardAvoidingView behavior="padding" style={styles.keyboard}>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <View style={styles.login}>
+                            <Text style={styles.title}>WELCOME BACK</Text>
+                            <View>
+                                <Text style={styles.titleInput}>Email:</Text>
+                                <TextInput type="email" placeholder="email" style={[styles.input, styles.inputText]}
+                                    onChangeText={(text) => setEmail(text)} />
+                            </View>
+                            <View>
+                                <Text style={styles.titleInput}>Password:</Text>
+                                <TextInput secureTextEntry={true} placeholder="Password" style={[styles.input, styles.inputText]}
+                                    onChangeText={(text) => setPass(text)} />
+                            </View>
+                            <TouchableOpacity style={styles.botton} onPress={handleSignin}><Text style={styles.h3}>LOG IN</Text></TouchableOpacity>
+                        </View>
                     </View>
-                    <View>
-                        <Text style={styles.titleInput}>Password:</Text>
-                        <TextInput secureTextEntry={true} placeholder="Password" style={[styles.input, styles.inputText]}
-                        onChangeText={(text) => setPass(text)} />
-                    </View>
-                    <TouchableOpacity style={styles.botton} onPress={handleSignin}><Text style={styles.h3}>LOG IN</Text></TouchableOpacity>
-                </View>
-            </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </>
     );
 }
@@ -56,7 +60,7 @@ export default function SignIn() {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: "100%",
+        height: 800,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#d7e7e3',
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     login: {
         backgroundColor: '#e6e6e6',
         width: '90%',
-        height: "50%",
+        minHeight: "50%",
         alignItems: "center",
         borderRadius: 10,
         shadowColor: 'black',
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
     botton: {
         margin: 30,
         backgroundColor: '#e6e6e6',
-        width: 80,
+        width: 250,
         height: 50,
         justifyContent: 'center',
         alignItems: "center",

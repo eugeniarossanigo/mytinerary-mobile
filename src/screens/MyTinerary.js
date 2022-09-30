@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Image } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useGetItineraryUserMutation } from '../redux/itinerariesAPI'
 import ItineraryCard from "../components/ItineraryCard";
@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 export default function MyTinerary() {
     const user = useSelector(state => state.auth.user)
     const userId = user?.id
-    console.log(user)
     const [arrayItineraries, setArrayItineraries] = useState([])
 
     const [showUserItinearies] = useGetItineraryUserMutation()
@@ -43,7 +42,7 @@ export default function MyTinerary() {
                             <View style={styles.profileConteiner}>
                                 <View style={styles.profile}>
                                     <View>
-                                        <Image style={styles.image} source={{uri: user?.photo}} />
+                                        <Image style={styles.image} source={{ uri: user?.photo }} />
                                     </View>
                                     <View style={styles.data}>
                                         <Text style={styles.email}>Email: </Text>
@@ -63,7 +62,9 @@ export default function MyTinerary() {
                         </View>
                     </>
                     :
-                    <Text>This user has 0 itineraries for now</Text>
+                    <View style={styles.noItinerary}>
+                        <Text style={styles.textNoItinerary}>This user has 0 itineraries for now</Text>
+                    </View>
                 }
             </ScrollView>
         </>
@@ -115,5 +116,18 @@ const styles = StyleSheet.create({
     },
     email: {
         fontWeight: '800',
-    }
+    },
+    noItinerary:{
+        width: '100%',
+        height:800,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: '#d7e7e3',
+    },
+    textNoItinerary:{
+        marginTop:600,
+        fontSize: '20',
+        fontWeight: '700',
+        height: "100%",
+    },
 })

@@ -11,28 +11,12 @@ export default function CommentCard({comment}) {
     const commentId = comment._id
 
     const [deleteComment] = useDeleteCommentMutation()
-    // const [updateComment] = useUpdateCommentMutation()
-    // const [open, setOpen] = useState(false)
-    // const handleClick = () => { open ? setOpen(false) : setOpen(true) }
 
     const handleDelete = async(e) => {
         e.preventDefault()
         await deleteComment(commentId)
         dispatch(reload())
     }
-
-    // const handleEdit = async(e) => {
-    //     e.preventDefault()
-    //     const objcomment = {
-    //         id: commentId,
-    //         comment: newInput.current.value,
-    //         user: user?.id,
-    //         itinerary: comment.itinerary._id
-    //     }
-    //     await updateComment(objcomment)
-    //     dispatch(reload())
-    //     setOpen(false)
-    // }
 
     return (
         <>
@@ -42,14 +26,6 @@ export default function CommentCard({comment}) {
                     <Text style={styles.h2}>{comment?.user.name}</Text>
                 </View>
                 <Text style={styles.h3}>{comment?.comment}</Text>
-                    {/* { open ?
-                        <Form>
-                            <TextInput type="text" name="comment" defaultValue={comment.comment} ref={newInput}/>
-                            <Button className="edit-ok" onClick={handleEdit}></Button>
-                        </Form>
-                    :
-                        <Text>{comment.comment}</Text>
-                    } */}
                 <View style={styles.commentsBtns} >
                     { user && (user?.id === comment.user._id) &&
                         <TouchableOpacity style={styles.btnMark} onPress={handleDelete}>

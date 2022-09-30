@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
         height: 100,
         justifyContent: 'center',
         alignSelf:'center',
-        marginTop:50,
+        marginTop:100,
     },
     p: {
-        marginTop:50,
+        marginTop:20,
         textAlign:'center',
         alignSelf: 'center',
         color: '#fff',
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 
     },
     botton: {
-        marginTop:50,
+        marginTop:30,
         width: 100,
         height: 50,
         justifyContent: 'center',
