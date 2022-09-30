@@ -63,7 +63,6 @@ export default function Drawer() {
                 <DrawerItemList {...props} />
                 { user &&
                 <>
-                    {/* <DrawerItem label="MyTnerary" component={SignIn} /> */}
                     <DrawerItem label="SignOut" onPress={handleOut} />
                 </>
                 }
@@ -88,15 +87,15 @@ export default function Drawer() {
         }} >
             <DrawerNavigation.Screen name={user? `Hi ${user.name}!` : "Home"} component={Stack} />
             <DrawerNavigation.Screen name="Cities" component={Cities} />        
-            { !user &&
+            { user ?
+                <DrawerNavigation.Screen name="MyTinerary" component={MyTinerary} />
+            :
             <>
                 <DrawerNavigation.Screen name="SignIn" component={SignIn} />
                 <DrawerNavigation.Screen name="SignUp" component={SignUp} />
-                <DrawerNavigation.Screen name="MyTinerary" component={MyTinerary} />
+                
             </>
             }
-            <DrawerNavigation.Screen name="Home" component={Stack} />
-            <DrawerNavigation.Screen name="Cities" component={Cities} />
         </DrawerNavigation.Navigator>
     );
 }
