@@ -1,6 +1,5 @@
-import { View, Form, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from "react-redux";
 import { useUserLoginMutation } from "../redux/usersAPI";
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +17,7 @@ export default function SignIn() {
     const handleSignin = async(e) => {
         e.preventDefault()
         let newUserData = {
-            mail: email.trim(),
+            mail: email.trim().toLowerCase(),
             password : pass.trim()
         }
         await userLogin(newUserData)
@@ -126,5 +125,4 @@ const styles = StyleSheet.create({
         borderBottomColor: '#377771',
         borderBottomWidth: 2,
     },
-
 })

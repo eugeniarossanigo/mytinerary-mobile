@@ -1,10 +1,9 @@
-import { StyleSheet, Text, Image, ScrollView, View, TouchableOpacity, FlatList, Dimensions, Animated, ImageBackground } from 'react-native';
+import { StyleSheet, Text, Image, ScrollView, View, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import Cities from './Cities';
 import Carrusel from '../components/Carrusel';
 import { useGetAllCitiesQuery } from '../redux/citiesAPI';
-
 
 export default function Home() {
     const { data: cities } = useGetAllCitiesQuery()
@@ -19,7 +18,7 @@ export default function Home() {
                         <TouchableOpacity style={styles.botton} onPress={() => navigation.navigate(Cities)}><Text style={styles.h3}>START TRIP</Text></TouchableOpacity>
                     </ImageBackground>
                 </View>
-                    <Text style={styles.titleCarrusel}>POPULAR MYTINERARYS</Text>
+                    <Text style={styles.titleCarrusel}>POPULAR MYTINERARIES</Text>
                 <Carrusel style={styles.carrusel} cities={cities?.response} />
             </SafeAreaView>
         </>

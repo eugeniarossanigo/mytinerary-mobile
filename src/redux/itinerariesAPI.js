@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import apiURL from '../../api'
+
+let token
+AsyncStorage.getItem('token').then(value => token = value)
 
 export const itinerariesAPI = createApi({
     reducerPath: "itinerariesAPI",
@@ -9,12 +13,6 @@ export const itinerariesAPI = createApi({
     }),
     
     endpoints: (builder) => ({
-        getAllItineraries: builder.query({
-            query: () => '/itineraries'
-        }),
-        getItineraryId: builder.query({
-            query: (id) => '/itineraries/'+id
-        }),
         getItineraries: builder.mutation({
             query(id){
                 return{
@@ -34,7 +32,7 @@ export const itinerariesAPI = createApi({
                 }
             }
         }),
-        getNewItinerary: builder.mutation({
+        NewItinerary: builder.mutation({
             query(itinerary){
                 return{
                     url: '/itineraries',
@@ -43,7 +41,7 @@ export const itinerariesAPI = createApi({
                 }
             }
         }),
-        getPatchItinerary: builder.mutation({
+        PatchItinerary: builder.mutation({
             query(itinerary){
                 return{
                     url: '/itineraries/' + itinerary.id,
@@ -52,7 +50,7 @@ export const itinerariesAPI = createApi({
                 }
             }
         }),
-        getDeleteItinerary: builder.mutation({
+        DeleteItinerary: builder.mutation({
             query(id){
                 return{
                     url: '/itineraries/' + id,
@@ -64,7 +62,7 @@ export const itinerariesAPI = createApi({
             query: (id) => ({
                 url: '/itineraries/likes/' + id,
                 method: 'PATCH',
-                headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+                headers: { Authorization: `Bearer ${token}` }
             })
         })
     })
@@ -72,5 +70,4 @@ export const itinerariesAPI = createApi({
 
 export default itinerariesAPI;
 
-export const { useGetItinerariesMutation } = itinerariesAPI
-// , useGetDeleteItineraryMutation, useGetAllItinerariesQuery, useGetItineraryCityQuery, useGetItineraryUserMutation, useGetNewItineraryMutation, useGetPatchItineraryMutation, useGetItineraryIdQuery, useLikeDislikeMutation
+export const { useGetItinerariesMutation, useDeleteItineraryMutation, useLikeDislikeMutation } = itinerariesAPI

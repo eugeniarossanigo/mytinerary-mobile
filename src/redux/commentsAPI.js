@@ -1,7 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import apiURL from '../../api'
 
+let token
+AsyncStorage.getItem('token').then(value => token = value)
+
 export const commentsAPI = createApi({
+    
     reducerPath: "commentsAPI",
 
     baseQuery: fetchBaseQuery({
@@ -30,7 +35,7 @@ export const commentsAPI = createApi({
                     url: '/comments',
                     method: 'POST',
                     body: comment,
-                    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+                    headers: { Authorization: `Bearer ${token}` }
                 }
             }
         }),
@@ -39,7 +44,7 @@ export const commentsAPI = createApi({
                 return{
                     url: '/comments/' + id,
                     method: 'DELETE',
-                    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+                    headers: { Authorization: `Bearer ${token}` }
                 }
             }
         }),
@@ -49,7 +54,7 @@ export const commentsAPI = createApi({
                     url: '/comments/' + body.id,
                     method: 'PATCH',
                     body: body,
-                    headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+                    headers: { Authorization: `Bearer ${token}` }
                 }
             }
         })
@@ -57,5 +62,4 @@ export const commentsAPI = createApi({
 })
 
 export default commentsAPI;
-export const { useCreateNewCommentMutation, useGetAllCommentsMutation } = commentsAPI
-// useGetCommentIdQuery, useGetCommentItineraryQuery, useGetCommentUserQuery, useDeleteCommentMutation, useUpdateCommentMutation
+export const { useCreateNewCommentMutation, useGetAllCommentsMutation, useDeleteCommentMutation } = commentsAPI

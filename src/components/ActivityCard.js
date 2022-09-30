@@ -38,5 +38,5 @@ const styles = StyleSheet.create({
         height: 180,
         borderRadius: 5,
         marginBottom: 20
-    },
-});
+    }
+})

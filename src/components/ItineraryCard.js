@@ -1,23 +1,24 @@
-import { StyleSheet, Text, View, Image, Button, Input, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, Button, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useState, useEffect } from 'react';
 import ActivityCard from './ActivityCard';
+import CommentCard from './CommentCard';
 import { useGetActivityItineraryQuery } from '../redux/activitiesAPI';
 import { useCreateNewCommentMutation, useGetAllCommentsMutation } from '../redux/commentsAPI';
-import { useSelector } from 'react-redux';
-import CommentCard from './CommentCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { reload } from '../redux/reloadSlice';
+import { useDeleteItineraryMutation, useLikeDislikeMutation } from '../redux/itinerariesAPI';
 
 export default function ItineraryCard({itinerary}) {
-    const user = ""
     const [open, setOpen] = useState(false)
     const [arrayComments, setArrayComments] = useState([])
     const likesLength = itinerary.likes.length
-    
-    // const handleClick = () => { open ? setOpen(false) : setOpen(true) }
+    const reloaded = useSelector(state => state.reload.reloadState)
+    // const [tokenUser, setTokenUser] = useState()
+    // AsyncStorage.getItem('token').then(value => setTokenUser(value))
 
     const {data: activities} = useGetActivityItineraryQuery(itinerary._id)
     const [showComments] = useGetAllCommentsMutation()
-
-    const reloaded = useSelector(state => state.reload.reloadState)
 
     const handleShowComments = async() =>{
         try {
@@ -32,20 +33,37 @@ export default function ItineraryCard({itinerary}) {
         handleShowComments()
     }, [reloaded, itinerary])
 
-    // const onPress = () => {
-    //     console.log("hi")
-    // }
+    const [addComment] = useCreateNewCommentMutation()
+    const [newComment, setNewComment] = useState("") 
 
-    // const newInput = useRef("")
-    
-    // const user = useSelector(state => state.auth.user)
-    // const userId = user?.id
-    // const dispatch = useDispatch()
-    // const [likeDislike] = useLikeDislikeMutation()
-    // const [deleteItinerary] = useGetDeleteItineraryMutation()
+    const sendComment = async() => {
+        const ids = {user: user?.id, itinerary: itinerary._id}
+        await addComment({...ids, comment: newComment})
+        dispatch(reload())
+    }
    
-        
-    // const [addComment] = useGetNewCommentMutation()
+    const user = useSelector(state => state.auth.user)
+    const userId = user?.id
+    const dispatch = useDispatch()
+    const [deleteItinerary] = useDeleteItineraryMutation()
+     
+    const handleDelete = async() => {
+        await deleteItinerary(itinerary._id)
+        dispatch(reload())
+    }
+
+    const [likeDislike] = useLikeDislikeMutation()
+
+    const handleLikes = async() => {
+        try {
+            let res = await likeDislike(itinerary._id)
+            if (res?.data.success){
+                dispatch(reload())
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
     
     return (
         <>
@@ -53,14 +71,13 @@ export default function ItineraryCard({itinerary}) {
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>{itinerary?.name}</Text>
                 </View>
-                {/* user && (user?.id === itinerary.user._id) && */}
-                { user && 
+                { user && (user?.id === itinerary.user._id) &&
                     <View style={styles.btnsContainer}>
                         <View style={styles.btn}>
                             <Button color='#377771' title="EDIT" onPress={() => console.log("edit")} />
                         </View>
                         <View style={styles.btn}>
-                            <Button color='#377771' title="DELETE" onPress={() => console.log("delete")} />
+                            <Button color='#377771' title="DELETE" onPress={handleDelete} />
                         </View>
                     </View>
                 }
@@ -76,12 +93,13 @@ export default function ItineraryCard({itinerary}) {
                     <View>
                         <Text style={styles.h3}>Likes:</Text>
                         <View style={styles.likes}>
-                            {/* user && itinerary.likes.includes(userId) ? */}
-                            { user ?
-                                <Image style={styles.heart} source={require("../../assets/heart-full.png")} />
-                            :
-                                <Image style={styles.heart} source={require("../../assets/heart-empty.png")} />
-                            }
+                            <TouchableOpacity onPress={handleLikes}>
+                                { user && itinerary.likes.includes(userId) ?
+                                    <Image style={styles.heart} source={require("../../assets/heart-full.png")} />
+                                :
+                                    <Image style={styles.heart} source={require("../../assets/heart-empty.png")} />
+                                }
+                            </TouchableOpacity>
                             <Text>{likesLength}</Text>
                         </View>
                     </View>
@@ -92,10 +110,8 @@ export default function ItineraryCard({itinerary}) {
                         <Text style={styles.h2}>{itinerary?.tags.map(tag => " #"+tag)}</Text>
                     </View>
                 </View>
-
                 <View style={styles.activitiesContainer}>
                     {activities?.response.map(activity => <ActivityCard activity={activity} />)}
-                    {/* userid={itinerary.user._id} */}
                 </View>
                 <Text style={styles.p}>Leave us your comment below</Text>
                 <View style={styles.btnsContainer}>
@@ -103,17 +119,16 @@ export default function ItineraryCard({itinerary}) {
                         <Image style={styles.arrowDown} source={require('../../assets/down-arrow.png')}></Image>
                     </TouchableOpacity>
                 </View>
-                {/* <View style={styles.commentsContainer}>
-                    {arrayComments?.map(comment => <CommentCard comment={comment}/>)}
-                </View> */}
                 { open ?
                     <View>
-                        {/* { user && 
-                            <form className='comment-input' onSubmit={sendComment}>
-                                <input type="text" name="comment" placeholder="Please leave a comment here!" ref={newInput}/>
-                                <button className="arrow-send" type="submit"><img src="/images/arrow-send.png" alt="arrow"></img></button>
-                            </form>
-                        } */}
+                        { user &&
+                            <View style={styles.inputContainer}>
+                                <TextInput style={styles.inputComment} type="text" placeholder="Comment here!" onChangeText={comment => setNewComment(comment)}/>
+                                <TouchableOpacity style={styles.btnSend} onPress={sendComment}>
+                                    <Image style={styles.arrowSend} source={require('../../assets/arrow-send.png')} />
+                                </TouchableOpacity>
+                            </View>
+                        }
                         <View style={styles.commentsContainer}>
                             {arrayComments?.map(comment => <CommentCard comment={comment}/>)}
                         </View>
@@ -179,8 +194,8 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     heart: {
-        width: 15,
-        height: 15
+        width: 18,
+        height: 18
     },
     activitiesContainer: {
         alignSelf: 'center'
@@ -191,11 +206,32 @@ const styles = StyleSheet.create({
     commentsContainer: {
         alignSelf: 'center'
     },
+    inputContainer: {
+        flexDirection: 'row',
+        paddingRight: 20,
+        paddingLeft: 20,
+    },
+    inputComment: {
+        width: 300,
+        backgroundColor: 'rgba(223, 170, 91, 0.5)',
+        paddingBottom: 5,
+        paddingTop: 5,
+        paddingLeft: 10,
+        marginBottom: 20,
+        borderRadius: 15,
+    },
     btnDown: {
+        paddingTop: 5,
+    },
+    btnSend: {
         paddingTop: 5,
     },
     arrowDown: {
         width: 20,
         height: 20
+    },
+    arrowSend: {
+        width: 20,
+        height: 20
     }
-});
+})

@@ -1,25 +1,25 @@
-// import { useSelector, useDispatch } from 'react-redux';
-// import { useRef, useState, useEffect } from 'react';
-// import { reload } from '../features/reloadSlice';
-import { TextInput } from 'react-native-gesture-handler';
-import { StyleSheet, Text, View, Image, Button, Input } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { reload } from '../redux/reloadSlice';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { useDeleteCommentMutation } from '../redux/commentsAPI';
 
 export default function CommentCard({comment}) {
     // const newInput = useRef("")
-    // const dispatch = useDispatch()
-    // const user = useSelector(state => state.auth.user)
-    // const commentId = comment._id
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.auth.user)
+    const commentId = comment._id
 
-    // const [deleteComment] = useDeleteCommentMutation()
+    const [deleteComment] = useDeleteCommentMutation()
     // const [updateComment] = useUpdateCommentMutation()
     // const [open, setOpen] = useState(false)
     // const handleClick = () => { open ? setOpen(false) : setOpen(true) }
 
-    // const handleDelete = async(e) => {
-    //     e.preventDefault()
-    //     await deleteComment(commentId)
-    //     dispatch(reload())
-    // }
+    const handleDelete = async(e) => {
+        e.preventDefault()
+        await deleteComment(commentId)
+        dispatch(reload())
+    }
 
     // const handleEdit = async(e) => {
     //     e.preventDefault()
@@ -33,11 +33,12 @@ export default function CommentCard({comment}) {
     //     dispatch(reload())
     //     setOpen(false)
     // }
+
     return (
         <>
             <View key={comment?._id} style={styles.commentContainer}>
                 <View style={styles.userComment}>
-                    <Image style={styles.image} source={comment?.user.photo} />
+                    <Image style={styles.image} source={{uri: comment?.user.photo}} />
                     <Text style={styles.h2}>{comment?.user.name}</Text>
                 </View>
                 <Text style={styles.h3}>{comment?.comment}</Text>
@@ -49,14 +50,13 @@ export default function CommentCard({comment}) {
                     :
                         <Text>{comment.comment}</Text>
                     } */}
-                {/* <View className='comments-btns'>
+                <View style={styles.commentsBtns} >
                     { user && (user?.id === comment.user._id) &&
-                        <View>
-                            <Image src="/images/edit-icon.png" alt="edit" onClick={handleClick} />
-                            <Image src="/images/x-mark.png" alt="del" onClick={handleDelete} />
-                        </View>
+                        <TouchableOpacity style={styles.btnMark} onPress={handleDelete}>
+                            <Image style={styles.xMark} source={require('../../assets/x-mark.png')} />
+                        </TouchableOpacity>
                     }
-                </View> */}
+                </View>
             </View>
         </>
     );
@@ -64,7 +64,7 @@ export default function CommentCard({comment}) {
 
 const styles = StyleSheet.create({
     commentContainer: {
-        width: 300,
+        width: 330,
         backgroundColor: '#d7e7e3',
         borderRadius: 5,
         flexDirection: 'row',
@@ -76,24 +76,35 @@ const styles = StyleSheet.create({
     userComment: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: 100
+        width: 80
     },
     h2: {
         color: '#000',
-        fontSize: 16,
-        fontWeight: '800'
+        fontSize: 13,
+        fontWeight: '800',
+        paddingLeft: 6
     },
     h3: {
         backgroundColor: '#fff',
-        paddingLeft: 10,
-        paddingRight: 10,
+        width: 200,
+        paddingLeft: 5,
+        paddingRight: 5,
         borderRadius: 5,
         fontSize: 15,
         alignSelf: 'center',
     },
     image: {
-        width: 30,
-        height: 30,
-        marginLeft: 2
-    }
+        width: 24,
+        height: 24,
+        marginLeft: 2,
+        borderRadius: 12
+    },
+    commentsBtns: {
+        paddingRight: 10,
+        justifyContent: 'center'
+    },
+    xMark: {
+        width: 15,
+        height: 15
+    },
 });

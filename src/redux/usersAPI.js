@@ -9,15 +9,6 @@ export const usersAPI = createApi({
     }),
     
     endpoints: (builder) => ({
-        getAllUsers: builder.query({
-            query: () => '/auth'
-        }),
-        getUserMail: builder.query({
-            query: (mail) => '/auth?mail='+mail
-        }),
-        getUserId: builder.query({
-            query: (id) => '/auth/'+id
-        }),
         userSignup: builder.mutation({
             query: (user) => ({
                 url: '/auth/signup',
@@ -32,11 +23,11 @@ export const usersAPI = createApi({
                 body: user
             })
         }),
-        userloginToken: builder.mutation({
-            query: () => ({
+        userLoginToken: builder.mutation({
+            query: (token) => ({
                 url: '/auth/token',
                 method: 'GET',
-                headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+                headers: { Authorization: 'Bearer ' + token }
             })
         }),
         userLogout: builder.mutation({
@@ -50,5 +41,4 @@ export const usersAPI = createApi({
 })
 
 export default usersAPI;
-export const { useGetAllUsersQuery, useUserSignupMutation, useUserLoginMutation, useUserLoginTokenMutation, useUserLogoutMutation } = usersAPI
-// useGetAllUsersQuery, useGetUserMailQuery, useGetUserIdQuery,
+export const { useUserSignupMutation, useUserLoginMutation, useUserLogoutMutation, useUserLoginTokenMutation } = usersAPI

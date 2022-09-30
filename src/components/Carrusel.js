@@ -1,25 +1,56 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList, Image, Dimensions, Animated, SafeAreaView, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
-const img = [
-    'http://drive.google.com/uc?export=view&id=1Zq6t_G9QlKzcHecGFZC9HehXwWQY-m00',
-    'http://drive.google.com/uc?export=view&id=1DDCP1TAeMzlzKW0ycXWpB0wal7Kf6qlV',
-    'http://drive.google.com/uc?export=view&id=1kGALp0t60av9-D-0v_kh3eOriMlWwN9h',
-    'http://drive.google.com/uc?export=view&id=1buqXzDnwXoZwjIm_PBM1D2kXG71Su5ew',
-    'http://drive.google.com/uc?export=view&id=1i_2QDNcbsiGdIps7utlJ8jAqXJt_XDhr'
-];
 const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
 const widthCont = width * 0.7;
 const space = 5;
 
 export default function Carrusel({ cities }) {
+    
     const navigation = useNavigation()
     const photos = cities?.map(item => ([item.photo, item.city, item._id]))
 
     const scrollX = React.useRef(new Animated.Value(0)).current;
+
+    const range = 1
+    const slides = 15
+    const interval = 3000
+    const [start, setStart] = useState(0)
+    const [end, setEnd] = useState(start + range)
+    const [idInterval, setIdInterval] = useState()
+
+    // useEffect(() => {
+    //     let idNew = setInterval(function () {
+    //         nextSlide()
+    //     }, interval)
+    //     setIdInterval(idNew)
+    //     return () => clearInterval(idNew)
+    // }, [start])
+
+    // let previousSlide = () => {
+    //     if (start >= range) {
+    //         setStart(start-range)
+    //         setEnd(end-range)
+    //     } else {
+    //         setStart(slides-range)
+    //         setEnd(slides)
+    //     }
+    //     clearInterval(idInterval)
+    // }
+
+    // let nextSlide = () => {
+    //     if (end < slides) {
+    //         setStart(start+range)
+    //         setEnd(end+range)
+    //     } else {
+    //         setStart(0)
+    //         setEnd(range)
+    //     }
+    //     clearInterval(idInterval)
+    // }
+
     return (
         <SafeAreaView style={StyleSheet.container}>
             <StatusBar hidden />

@@ -1,4 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 import Home from '../../src/screens/Home'
 import Cities from '../screens/Cities';
 import Details from '../screens/Details';
@@ -8,6 +9,7 @@ import SignUp from '../screens/SignUp';
 const StackNavigation = createStackNavigator();
 
 export default function Stack() {
+    const user = useSelector(state => state.auth.user)
 
     return (
         <StackNavigation.Navigator initialRouteName='Home'>
