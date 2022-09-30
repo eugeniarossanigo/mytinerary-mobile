@@ -63,7 +63,7 @@ export default function MyTinerary() {
                     </>
                     :
                     <View style={styles.noItinerary}>
-                        <Text style={styles.textNoItinerary}>This user has 0 itineraries for now</Text>
+                        <Text style={styles.textNoItinerary}>Hi {user?.name}! You have 0 itineraries for now</Text>
                     </View>
                 }
             </ScrollView>
