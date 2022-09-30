@@ -93,7 +93,6 @@ export default function Drawer() {
             <>
                 <DrawerNavigation.Screen name="SignIn" component={SignIn} />
                 <DrawerNavigation.Screen name="SignUp" component={SignUp} />
-                
             </>
             }
         </DrawerNavigation.Navigator>

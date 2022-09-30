@@ -20,37 +20,7 @@ export default function Carrusel({ cities }) {
     const [start, setStart] = useState(0)
     const [end, setEnd] = useState(start + range)
     const [idInterval, setIdInterval] = useState()
-
-    // useEffect(() => {
-    //     let idNew = setInterval(function () {
-    //         nextSlide()
-    //     }, interval)
-    //     setIdInterval(idNew)
-    //     return () => clearInterval(idNew)
-    // }, [start])
-
-    // let previousSlide = () => {
-    //     if (start >= range) {
-    //         setStart(start-range)
-    //         setEnd(end-range)
-    //     } else {
-    //         setStart(slides-range)
-    //         setEnd(slides)
-    //     }
-    //     clearInterval(idInterval)
-    // }
-
-    // let nextSlide = () => {
-    //     if (end < slides) {
-    //         setStart(start+range)
-    //         setEnd(end+range)
-    //     } else {
-    //         setStart(0)
-    //         setEnd(range)
-    //     }
-    //     clearInterval(idInterval)
-    // }
-
+    
     return (
         <SafeAreaView style={StyleSheet.container}>
             <StatusBar hidden />
