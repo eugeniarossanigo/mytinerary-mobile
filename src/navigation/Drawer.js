@@ -10,8 +10,12 @@ import Stack from './Stack';
 import { useUserLogoutMutation, useUserLoginTokenMutation } from "../redux/usersAPI";
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCredentials } from '../redux/userSlice';
+<<<<<<< HEAD
 import { setCredentials } from '../redux/userSlice';
 import { useEffect, useState } from 'react';
+=======
+import MyTinerary from '../screens/MyTinerary';
+>>>>>>> 4b6ad9440eff2ee3c60c93f44dd017fb3ed8d505
 
 const DrawerNavigation = createDrawerNavigator();
 
@@ -92,8 +96,11 @@ export default function Drawer() {
             <>
                 <DrawerNavigation.Screen name="SignIn" component={SignIn} />
                 <DrawerNavigation.Screen name="SignUp" component={SignUp} />
+                <DrawerNavigation.Screen name="MyTinerary" component={MyTinerary} />
             </>
             }
+            <DrawerNavigation.Screen name="Home" component={Stack} />
+            <DrawerNavigation.Screen name="Cities" component={Cities} />
         </DrawerNavigation.Navigator>
     );
 }

@@ -1,8 +1,6 @@
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-
-
 export default function SignUp() {
     return (
         <>

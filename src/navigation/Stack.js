@@ -5,6 +5,7 @@ import Cities from '../screens/Cities';
 import Details from '../screens/Details';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
+import MyTinerary from '../screens/MyTinerary';
 
 const StackNavigation = createStackNavigator();
 
@@ -18,6 +19,7 @@ export default function Stack() {
             <StackNavigation.Screen name="Details" component={Details} options={{headerShown: false}} />
             <StackNavigation.Screen name="SignIn" component={SignIn} options={{headerShown: false}} />
             <StackNavigation.Screen name="SignUp" component={SignUp} options={{headerShown: false}} />
+            <StackNavigation.Screen name="MyTinerary" component={MyTinerary} options={{headerShown: false}} />
         </StackNavigation.Navigator>
     );
 }
